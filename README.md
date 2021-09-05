@@ -1,5 +1,5 @@
 # spring_mongo_todo
-Starting with spring and mongodb
+Starting  mongodb
 
 # Technologie
 ### Spring Boot
