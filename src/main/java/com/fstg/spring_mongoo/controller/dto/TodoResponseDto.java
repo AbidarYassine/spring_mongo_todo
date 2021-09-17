@@ -10,6 +10,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TodoResponseDto {
+    private String id;
     private String todo;
     private boolean completed;
     private String description;

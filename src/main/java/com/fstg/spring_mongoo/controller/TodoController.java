@@ -4,6 +4,8 @@ import com.fstg.spring_mongoo.controller.api.TodoApi;
 import com.fstg.spring_mongoo.controller.dto.TodoRequestDto;
 import com.fstg.spring_mongoo.controller.dto.TodoResponseDto;
 import com.fstg.spring_mongoo.service.facade.TodoService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,27 +20,38 @@ public class TodoController implements TodoApi {
     }
 
     @Override
-    public List<TodoResponseDto> findAll() {
-        return todoService.findAll();
+    public ResponseEntity<List<TodoResponseDto>> findAll() {
+        List<TodoResponseDto> todoResponseDtos = todoService.findAll();
+        return ResponseEntity.ok(todoResponseDtos);
     }
 
     @Override
-    public TodoResponseDto save(TodoRequestDto todo) {
-        return todoService.save(todo);
+    public ResponseEntity<TodoResponseDto> save(TodoRequestDto todo) {
+        TodoResponseDto todoResponseDto = todoService.save(todo);
+        return new ResponseEntity<>(todoResponseDto, HttpStatus.CREATED);
     }
 
     @Override
-    public TodoResponseDto findById(String id) {
-        return todoService.findById(id);
+    public ResponseEntity<TodoResponseDto> findById(String id) {
+        TodoResponseDto todoResponseDto = todoService.findById(id);
+        return ResponseEntity.ok(todoResponseDto);
     }
 
     @Override
-    public int delete(String id) {
-        return todoService.delete(id);
+    public ResponseEntity<TodoResponseDto> findByTodo(String todo) {
+        TodoResponseDto todoResponseDto = todoService.findByTodo(todo);
+        return ResponseEntity.ok(todoResponseDto);
     }
 
     @Override
-    public TodoResponseDto updateTodo(TodoRequestDto todo, String id) {
-        return todoService.updateTodo(todo, id);
+    public ResponseEntity<?> delete(String id) {
+        todoService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<TodoResponseDto> updateTodo(TodoRequestDto todo, String id) {
+        TodoResponseDto todoResponseDto = todoService.updateTodo(todo, id);
+        return ResponseEntity.accepted().body(todoResponseDto);
     }
 }
